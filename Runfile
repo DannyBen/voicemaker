@@ -1,0 +1,41 @@
+require "runfile-tasks"
+require "pretty_trace/enable-trim"
+require "lp"
+require_relative 'lib/voicemaker'
+
+title   "Voicemaker Developer Toolbelt"
+summary "Runfile tasks for building the Voicemaker gem"
+version Voicemaker::VERSION
+
+RunfileTasks::RubyGems.all 'voicemaker'
+RunfileTasks::Testing.rspec
+RunfileTasks::Docs.rdoc
+
+help   "Run YARD server"
+action :yard do
+  system "yard server -p3000 -B0.0.0.0 -r"
+end
+
+help   "Run interactive console"
+action :console, :c do
+  system "bundle exec bin/console"
+end
+
+help   "Run test mock server"
+usage  "mockserver"
+action :mockserver do |args|
+  exec "ruby spec/mock_api/server.rb"
+end
+
+help   "Inject the --help output to the README"
+action :'readme-patch' do
+  tag = "<!-- USAGE -->"
+  help = `bundle exec voicemaker --help`
+  header = "```\n$ voicemaker --help\n"
+  footer = "```"
+  readme = File.read 'README.md'
+  output = readme.gsub /#{tag}(.*)#{tag}/m, "#{tag}\n#{header}\n#{help}\n#{footer}\n#{tag}"
+  File.write 'README.md', output
+end
+
+require './debug.rb' if File.exist? 'debug.rb'

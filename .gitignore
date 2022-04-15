@@ -1,0 +1,15 @@
+*.gem
+/*.mp3
+/.yardoc
+/cache
+/config.yml
+/coverage
+/debug.rb
+/dev
+/doc
+/Gemfile.lock
+/gems
+/out.yml
+/spec/cache
+/spec/tmp
+/tmp
