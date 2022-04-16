@@ -2,7 +2,6 @@
 /*.mp3
 /.yardoc
 /cache
-/config.yml
 /coverage
 /debug.rb
 /dev

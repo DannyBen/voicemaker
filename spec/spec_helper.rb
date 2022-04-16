@@ -21,6 +21,11 @@ rescue HTTP::ConnectionError
   # :nocov:
 end
 
+def clean_tmp_dir
+  system 'rm -rf spec/tmp/*'
+  'spec/tmp'
+end
+
 RSpec.configure do |c|
   c.filter_run_excluding :require_test_api_key unless ENV['VOICEMAKER_TEST_API_KEY']
 
