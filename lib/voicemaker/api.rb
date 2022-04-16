@@ -12,13 +12,8 @@ module Voicemaker
       end
     end
 
-    def initialize(api_key, base_uri: nil)
+    def initialize(api_key)
       @api_key = api_key
-      self.class.base_uri = base_uri
-    end
-
-    def base_uri
-      self.class.base_uri
     end
 
     def voices(search = nil)
@@ -48,6 +43,10 @@ module Voicemaker
     end
 
   protected 
+
+    def base_uri
+      self.class.base_uri
+    end
 
     def auth_header
       "Bearer #{api_key}"

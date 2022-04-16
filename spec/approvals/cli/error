@@ -1,0 +1,2 @@
+ERROR: Voicemaker::InputError
+Cannot find config file missing.yml

@@ -1,0 +1,5 @@
+Usage:
+  voicemaker voices [--save PATH] [SEARCH...]
+  voicemaker config [CONFIG]
+  voicemaker generate [CONFIG OUTPUT]
+  voicemaker (-h|--help|--version)

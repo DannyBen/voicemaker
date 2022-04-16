@@ -1,0 +1,2 @@
+voices: voices Jony
+generate: generate spec/fixtures/minimal.yml spec/tmp/real.mp3

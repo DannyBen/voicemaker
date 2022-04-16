@@ -1,0 +1,5 @@
+#<Voicemaker::BadResponse: 400 Bad Request
+{
+  "success": false,
+  "message": "Some Attributes are missing!VoiceId::ai3-Jony\nLanguageCode::en-US\nText::ERROR ME\n"
+}>

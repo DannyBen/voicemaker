@@ -9,6 +9,8 @@
 /doc
 /Gemfile.lock
 /gems
+/out.json
+/out.yaml
 /out.yml
 /spec/cache
 /spec/tmp

@@ -1,12 +1,9 @@
 require 'lp'
 require 'down'
 require 'mister_bin'
-require 'voicemaker/refinements'
 
 module Voicemaker
   class Command < MisterBin::Command
-    using Voicemaker::Refinements
-
     help "Voicemaker API\n\n  API Documentation:\n  https://developer.voicemaker.in/apidocs"
     version Voicemaker::VERSION
 
@@ -28,18 +25,7 @@ module Voicemaker
     param "OUTPUT", "Path to output MP3 or WAV [default: out.mp3"
 
     environment "VOICEMAKER_API_KEY", "Your Voicemaker API key [required]"
-    environment "VOICEMAKER_CACHE_DIR", "API cache diredctory [default: cache]"
-    environment "VOICEMAKER_CACHE_LIFE", <<~EOF
-      API cache life. These formats are supported:
-      off - No cache
-      20s - 20 seconds
-      10m - 10 minutes
-      10h - 10 hours
-      10d - 10 days
-    EOF
-    environment "VOICEMAKER_API_URI", "Override the API URI [default: #{Voicemaker::API.base_uri}]"
 
-    example "voicemaker langs"
     example "voicemaker voices en-us"
     example "voicemaker voices en-us female"
 
@@ -48,6 +34,7 @@ module Voicemaker
     end
 
     def generate_command
+      raise InputError, "Cannot find config file #{config_path}" unless File.exist? config_path
       say "Sending API request"
       url = api.generate config
       say "Downloading !txtgrn!#{url}"
@@ -59,7 +46,7 @@ module Voicemaker
 
     def send_output(data)
       if save
-        say "saved #{save}"
+        say "Saved #{save}"
         File.write save, data.to_yaml
       else
         lp data
@@ -67,7 +54,7 @@ module Voicemaker
     end
 
     def api
-      @api ||= Voicemaker::API.new(api_key, base_uri: ENV['VOICEMAKER_API_URI'])
+      @api ||= Voicemaker::API.new(api_key)
     end
 
     def api_key

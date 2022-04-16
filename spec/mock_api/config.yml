@@ -1,0 +1,47 @@
+:generate:
+  success: true
+  path: http://localhost:3000/uploads/1234567-voicemaker.in-speech.mp3
+  # path: https://developer.voicemaker.in/uploads/1650096221579-voicemaker.in-speech.mp3
+
+:generate_error:
+  success: false
+  message: |
+    Some Attributes are missing!VoiceId::ai3-Jony
+    LanguageCode::en-US
+    Text::ERROR ME
+
+:voices:
+  success: true
+  data:
+    count: 5
+    voices_list:
+    - Engine: neural
+      VoiceId: ai2-John
+      VoiceGender: Male (Kid)
+      VoiceWebname: John
+      Country: US
+      Language: en-US
+    - Engine: neural
+      VoiceId: ai2-Kathy
+      VoiceGender: Female
+      VoiceWebname: Kathy
+      Country: US
+      Language: en-US
+    - Engine: neural
+      VoiceId: ai3-Jony
+      VoiceGender: Male
+      VoiceWebname: Jony
+      Country: US
+      Language: en-US
+    - Engine: neural
+      VoiceId: ai1-Amy
+      VoiceGender: Female (Kid)
+      VoiceWebname: Amy
+      Country: GB
+      Language: en-GB
+    - Engine: neural
+      VoiceId: ai1-Emma
+      VoiceGender: Female
+      VoiceWebname: Emma
+      Country: GB
+      Language: en-GB
