@@ -1,4 +1,5 @@
 require 'http'
+require 'down'
 
 module Voicemaker
   class API

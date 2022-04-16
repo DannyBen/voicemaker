@@ -1,5 +1,4 @@
 require 'lp'
-require 'down'
 require 'mister_bin'
 
 module Voicemaker
@@ -13,11 +12,10 @@ module Voicemaker
     usage "voicemaker batch INDIR OUTDIR"
     usage "voicemaker (-h|--help|--version)"
 
-    command "langs", "Get list of supported languages"
     command "voices", "Get list of voices, optionally in a given language"
     command "new", "Generate a sample config file"
-    command "generate", "Generate text to speech file. The output filename will be the same as the config filename, with the proper mp3 or wav extension"
-    command "batch", "Generate multiple files from multiple config files"
+    command "generate", "Generate audio file. The output filename will be the same as the config filename, with the proper mp3 or wav extension"
+    command "batch", "Generate multiple audio files from multiple config files"
 
     option "-l --language LANG", "Limit results to a specific language"
     option "-s --save PATH", "Save output to output YAML file"

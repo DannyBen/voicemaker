@@ -12,6 +12,12 @@ describe Command do
     end
   end
 
+  describe '--help' do
+    it "shows full usage" do
+      expect { subject.run ['--help'] }.to output_approval 'cli/help'
+    end
+  end
+
   describe 'voices' do
     it "shows a list of voices" do
       expect { subject.run %w[voices] }.to output_approval 'cli/voices'
