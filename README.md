@@ -2,6 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/voicemaker.svg)](https://badge.fury.io/rb/voicemaker)
 [![Build Status](https://github.com/DannyBen/voicemaker/workflows/Test/badge.svg)](https://github.com/DannyBen/voicemaker/actions?query=workflow%3ATest)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b1977ee0d60affeba3d4/test_coverage)](https://codeclimate.com/github/DannyBen/voicemaker/test_coverage)
 
 ---
 
