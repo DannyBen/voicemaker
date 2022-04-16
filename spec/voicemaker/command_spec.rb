@@ -61,13 +61,41 @@ describe Command do
       expect(File).to exist(outpath)
     end
 
+    context "without output path" do
+      let(:config) { 'spec/tmp/tada.yml' }
+
+      before do
+        clean_tmp_dir
+        system "cp spec/fixtures/config.yml #{config}"
+      end
+
+      it "deduces the output path from the config" do
+        expect { subject.run %W[generate #{config}] }
+          .to output_approval('cli/generate-auto-outpath')
+
+        expect(File).to exist('spec/tmp/tada.mp3')
+      end
+    end
+
     context "with invalid config" do
       it "raises an error" do
         expect { subject.run %w[generate noconfig.yml out.mp3] }
           .to raise_approval('cli/generate-invalid-config')
       end
     end
+  end
 
+  describe 'batch', :focus do
+    before { clean_tmp_dir }
+    let(:indir) { 'spec/fixtures/indir' }
+    let(:outdir) { 'spec/tmp' }
+
+    it "makes multiple generation calls" do
+      expect { subject.run %W[batch #{indir} #{outdir}] }
+        .to output_approval('cli/batch')
+
+      expect(Dir["#{outdir}/*"].to_yaml).to match_approval('cli/batch-dir')
+    end
   end
 
 end

@@ -1,5 +1,6 @@
 Usage:
   voicemaker voices [--save PATH] [SEARCH...]
   voicemaker new CONFIG
-  voicemaker generate CONFIG OUTPUT
+  voicemaker generate CONFIG [OUTPUT]
+  voicemaker batch INDIR OUTDIR
   voicemaker (-h|--help|--version)

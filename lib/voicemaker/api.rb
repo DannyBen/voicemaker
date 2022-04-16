@@ -8,7 +8,7 @@ module Voicemaker
       attr_writer :base_uri
 
       def base_uri
-        @base_uri ||= 'https://developer.voicemaker.in/voice'
+        @base_uri ||= ENV['VOICEMAKER_API_HOST'] || 'https://developer.voicemaker.in/voice'
       end
     end
 
@@ -16,6 +16,7 @@ module Voicemaker
       @api_key = api_key
     end
 
+    # Returns a list of voices, with optional search criteria (array)
     def voices(search = nil)
       search = nil if search&.empty?
       response = HTTP.auth(auth_header).get "#{base_uri}/list"
@@ -33,6 +34,7 @@ module Voicemaker
       end
     end
 
+    # Returns the URL for the generated file
     def generate(params = {})
       response = HTTP.auth(auth_header).post "#{base_uri}/api", json: params
       if response.status.success?
@@ -40,6 +42,13 @@ module Voicemaker
       else
         raise BadResponse, "#{response.status}\n#{response.body}"
       end
+    end
+
+    # Calls the API and saves the file
+    def download(outpath, params = {})
+      path = generate params
+      yield path if block_given?
+      Down.download path, destination: outpath
     end
 
   protected 

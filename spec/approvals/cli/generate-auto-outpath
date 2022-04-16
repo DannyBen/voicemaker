@@ -1,3 +1,3 @@
-Config : spec/fixtures/config.yml
+Config : spec/tmp/tada.yml
 URL    : http://localhost:3000/uploads/1234567-voicemaker.in-speech.mp3
-Path   : spec/tmp/out.mp3
+Path   : spec/tmp/tada.mp3

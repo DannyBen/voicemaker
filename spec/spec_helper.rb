@@ -8,8 +8,8 @@ Bundler.require :default, :development
 require 'voicemaker/cli'
 include Voicemaker
 
-FAKE_API_KEY = 'fake-test-token'
-ENV['VOICEMAKER_API_TOKEN'] = FAKE_API_KEY
+FAKE_API_KEY = 'fake-test-key'
+ENV['VOICEMAKER_API_KEY'] = FAKE_API_KEY
 
 def require_mock_server!
   result = HTTP.get('http://localhost:3000/')
