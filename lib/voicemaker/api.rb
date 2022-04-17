@@ -28,7 +28,7 @@ module Voicemaker
       if search
         voices.select do |voice|
           search_string = voice.values.join(' ').downcase
-          search.any? { |query| search_string.include? query.downcase }
+          search.all? { |query| search_string.include? query.downcase }
         end
       else
         voices

@@ -30,8 +30,8 @@ describe Command do
     end
 
     context "with multiple search strings" do
-      it "only shows the voices matching any (or) string" do
-        expect { subject.run %w[voices kid gb] }.to output_approval 'cli/voices-search2'
+      it "only shows the voices matching all (AND) string" do
+        expect { subject.run %w[voices female ai1] }.to output_approval 'cli/voices-search2'
       end
     end
 
