@@ -19,9 +19,15 @@ describe API do
       expect(subject.voices.to_yaml).to match_approval('api/voices')
     end
 
+    context "with a search string argument" do
+      it "returns only the voices that include the word" do
+        expect(subject.voices('kid').to_yaml).to match_approval('api/voices-search')
+      end
+    end
+
     context "with a search array argument" do
-      it "returns only the voices that include at least one of the words" do
-        expect(subject.voices(['kid']).to_yaml).to match_approval('api/voices-search')
+      it "returns only the voices that include all of the words" do
+        expect(subject.voices(['kid', 'en-us']).to_yaml).to match_approval('api/voices-search-array')
       end
     end
   end

@@ -20,15 +20,19 @@ module Voicemaker
     # Returns a list of voices, with optional search criteria (array)
     def voices(search = nil)
       search = nil if search&.empty?
+      search = [search] if search.is_a? String
       response = HTTP.auth(auth_header).get "#{base_uri}/list"
+
       raise BadResponse, "#{response.status}\n#{response.body}" unless response.status.success?
+      
       voices = response.parse.dig 'data', 'voices_list'
+      
       raise BadResponse, "Unexpected response: #{response}" unless voices
 
       if search
         voices.select do |voice|
           search_string = voice.values.join(' ').downcase
-          search.any? { |query| search_string.include? query.downcase }
+          search.all? { |query| search_string.include? query.downcase }
         end
       else
         voices

@@ -39,7 +39,7 @@ Options:
 
 Parameters:
   SEARCH
-    Provide one or more text strings to search for (case insensitive)
+    Provide one or more text strings to search for (case insensitive AND search)
 
   CONFIG
     Path to config file

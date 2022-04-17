@@ -20,7 +20,7 @@ module Voicemaker
     option "-l --language LANG", "Limit results to a specific language"
     option "-s --save PATH", "Save output to output YAML file"
 
-    param "SEARCH", "Provide one or more text strings to search for (case insensitive)"
+    param "SEARCH", "Provide one or more text strings to search for (case insensitive AND search)"
     param "CONFIG", "Path to config file"
     param "OUTPUT", "Path to output mp3/wav file. If not provided, the filename will be the same as the config file, with wav/mp3 extension"
     param "INDIR", "Path to input directory, containing config YAML files"
