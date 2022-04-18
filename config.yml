@@ -1,10 +1,7 @@
-Engine: neural
-VoiceId: ai3-Jony
-LanguageCode: en-US
-OutputFormat: mp3
-SampleRate: 48000
-Effect: default
-MasterSpeed: "0"
-MasterVolume: "0"
-MasterPitch: "0"
-Text: Hi
+voice: ai3-Jony
+output_format: wav
+sample_rate: 48000
+effect: default
+master_speed: 0
+master_volume: 0
+master_pitch: 0

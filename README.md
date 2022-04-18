@@ -59,17 +59,24 @@ result = api.voices ["en_US", "female"]
 Make an API call and get the URL to the audio file in return:
 
 ```ruby
+result = api.generate Engine: "neural", VoiceId: "ai3-Jony",
+  LanguageCode: "en-US", Text: "Hello world"
+```
+
+or with the full list of available parameters:
+
+```ruby
 params = {
-  "Engine" => "neural",
-  "VoiceId" => "ai3-Jony",
-  "LanguageCode" => "en-US",
-  "OutputFormat" => "mp3",
-  "SampleRate" => "48000",
-  "Effect" => "default",
-  "MasterSpeed" => "0",
-  "MasterVolume" => "0",
-  "MasterPitch" => "0",
-  "Text" => "Hello world",
+  Engine: "neural",
+  VoiceId: "ai3-Jony",
+  LanguageCode: "en-US",
+  Text: "Hello world",
+  OutputFormat: "mp3",
+  SampleRate: "48000",
+  Effect: "default",
+  MasterSpeed: "0",
+  MasterVolume: "0",
+  MasterPitch: "0",
 }
 
 result = api.generate params

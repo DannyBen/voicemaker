@@ -1,70 +1,76 @@
+require 'lightly'
 require 'http'
-require 'down'
 
 module Voicemaker
   class API
-    attr_reader :api_key
 
     class << self
-      attr_writer :base_uri
+      attr_writer :root, :key, :cache_life, :cache_dir
 
-      def base_uri
-        @base_uri ||= ENV['VOICEMAKER_API_HOST'] || 'https://developer.voicemaker.in/voice'
+      def root
+        @root ||= ENV['VOICEMAKER_API_ROOT'] || 'https://developer.voicemaker.in/voice'
       end
-    end
 
-    def initialize(api_key)
-      @api_key = api_key
-    end
+      def key
+        @key ||= ENV['VOICEMAKER_API_KEY'] || raise(MissingAuth, "Please set the 'VOICEMAKER_API_KEY' environment variable")
+      end
 
-    # Returns a list of voices, with optional search criteria (array)
-    def voices(search = nil)
-      search = nil if search&.empty?
-      search = [search] if search.is_a? String
-      response = HTTP.auth(auth_header).get "#{base_uri}/list"
+      def cache_life
+        @cache_life ||= ENV['VOICEMAKER_CACHE_LIFE'] || '4h'
+      end
 
-      raise BadResponse, "#{response.status}\n#{response.body}" unless response.status.success?
-      
-      voices = response.parse.dig 'data', 'voices_list'
-      
-      raise BadResponse, "Unexpected response: #{response}" unless voices
+      def cache_dir
+        @cache_dir ||= ENV['VOICEMAKER_CACHE_DIR'] || 'cache'
+      end
 
-      if search
-        voices.select do |voice|
-          search_string = voice.values.join(' ').downcase
-          search.all? { |query| search_string.include? query.downcase }
+      # Performs HTTP GET and cache it
+      # Returns a parsed body on success
+      # Raises BadResponse on error
+      def get(endpoint, params = {})
+        cache.get "#{root}/#{endpoint}+#{params}" do
+          response = get! endpoint, params
+          response.parse
         end
-      else
-        voices
       end
-    end
 
-    # Returns the URL for the generated file
-    def generate(params = {})
-      response = HTTP.auth(auth_header).post "#{base_uri}/api", json: params
-      if response.status.success?
-        response.parse['path']
-      else
-        raise BadResponse, "#{response.status}\n#{response.body}"
+      # Performs HTTP GET
+      # Returns a parsed body on success
+      # Raises BadResponse on error
+      def get!(endpoint, params = {})
+        response = HTTP.auth(auth_header).get "#{root}/#{endpoint}", json: params
+        raise BadResponse, "#{response.status}\n#{response.body}" unless response.status.success?
+        response
       end
+      
+      # Performs HTTP GET and cache it
+      # Returns a parsed body on success
+      # Raises BadResponse on error
+      def post(endpoint, params = {})
+        cache.get "#{root}/#{endpoint}+#{params}" do
+          response = post! endpoint, params
+          response.parse
+        end
+      end
+
+      # Performs HTTP POST
+      # Returns a parsed body on success
+      # Raises BadResponse on error
+      def post!(endpoint, params = {})
+        response = HTTP.auth(auth_header).post "#{root}/#{endpoint}", json: params
+        raise BadResponse, "#{response.status}\n#{response.body}" unless response.status.success?
+        response
+      end
+
+      def cache
+        @cache ||= Lightly.new life: cache_life, dir: cache_dir
+      end
+
+  protected
+
+      def auth_header
+        "Bearer #{key}"
+      end
+
     end
-
-    # Calls the API and saves the file
-    def download(outpath, params = {})
-      path = generate params
-      yield path if block_given?
-      Down.download path, destination: outpath
-    end
-
-  protected 
-
-    def base_uri
-      self.class.base_uri
-    end
-
-    def auth_header
-      "Bearer #{api_key}"
-    end
-
   end
 end
