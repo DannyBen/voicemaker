@@ -67,13 +67,6 @@ module Voicemaker
       def outdir
         "#{project_dir}/out"
       end
-
-      def text_from_file
-        path = args['--file']
-        raise InputError, "Cannot find text file: #{path}" unless File.exist? path
-        File.read path
-      end
-
     end
   end
 end

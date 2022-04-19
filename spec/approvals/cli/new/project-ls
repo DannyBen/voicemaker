@@ -1,0 +1,6 @@
+---
+- spec/tmp/project/config.yml
+- spec/tmp/project/in
+- spec/tmp/project/in/sample1.txt
+- spec/tmp/project/in/sample2.txt
+- spec/tmp/project/out

@@ -1,0 +1,37 @@
+Create multiple audio files
+
+Usage:
+  voicemaker project PATH [--debug]
+  voicemaker project (-h|--help)
+
+Options:
+  --debug
+    Show API parameters
+
+  -h --help
+    Show this help
+
+Parameters:
+  PATH
+    Path to the project directory
+
+Environment Variables:
+  VOICEMAKER_API_KEY
+    Your Voicemaker API key [required]
+
+  VOICEMAKER_API_HOST
+    Override the API host URL
+
+  VOICEMAKER_CACHE_DIR
+    API cache diredctory [default: cache]
+
+  VOICEMAKER_CACHE_LIFE
+    API cache life. These formats are supported:
+    off - No cache
+    20s - 20 seconds
+    10m - 10 minutes
+    10h - 10 hours
+    10d - 10 days
+
+Examples:
+  voicemaker project sample-project

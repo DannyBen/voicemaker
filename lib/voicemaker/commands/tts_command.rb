@@ -6,7 +6,7 @@ module Voicemaker
       usage "voicemaker tts [options]"
       usage "voicemaker tts (-h|--help)"
 
-      option "-v --voice ID", "Voice ID"
+      option "-v --voice NAME", "Voice ID or Webname"
       option "-t --text TEXT", "Text to say"
       option "-f --file PATH", "Load text from file"
       option "-c --config PATH", "Use a YAML configuration file"
@@ -15,7 +15,7 @@ module Voicemaker
         If not provided, a URL to the audio file will be printed instead.
         When used with the --config option, omit the file extension, as it will be determined based on the config file.
       EOF
-      option "--debug", "Show API parameters"
+      option "-d --debug", "Show API parameters"
 
       api_environment
 

@@ -1,3 +1,0 @@
-Config : spec/fixtures/config.yml
-URL    : http://localhost:3000/uploads/1234567-voicemaker.in-speech.mp3
-Path   : spec/tmp/out.mp3

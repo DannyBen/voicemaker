@@ -1,0 +1,3 @@
+Usage:
+  voicemaker project PATH [--debug]
+  voicemaker project (-h|--help)

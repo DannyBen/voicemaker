@@ -1,0 +1,29 @@
+Create a new config file or a project directory
+
+Usage:
+  voicemaker new config PATH
+  voicemaker new project DIR
+  voicemaker new (-h|--help)
+
+Commands:
+  config
+    Create a config file to be used with the 'voicemaker tts' command
+
+  project
+    Generate a project directory to be used with the 'voicemaker project'
+    command
+
+Options:
+  -h --help
+    Show this help
+
+Parameters:
+  PATH
+    Path to use for creating the config file
+
+  DIR
+    Directory name for creating the project structure
+
+Examples:
+  voicemaker new config test.yml
+  voicemaker new project sample-project

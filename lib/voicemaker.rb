@@ -1,6 +1,6 @@
 require 'voicemaker/version'
 require 'voicemaker/exceptions'
-require 'voicemaker/extensions'
+require 'voicemaker/extensions/file'
 require 'voicemaker/api'
 require 'voicemaker/voices'
 require 'voicemaker/tts_params'

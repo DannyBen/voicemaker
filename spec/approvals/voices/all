@@ -1,0 +1,36 @@
+---
+ai1-Amy:
+  Engine: neural
+  VoiceId: ai1-Amy
+  VoiceGender: Female (Kid)
+  VoiceWebname: Amy
+  Country: GB
+  Language: en-GB
+ai1-Emma:
+  Engine: neural
+  VoiceId: ai1-Emma
+  VoiceGender: Female
+  VoiceWebname: Emma
+  Country: GB
+  Language: en-GB
+ai2-John:
+  Engine: neural
+  VoiceId: ai2-John
+  VoiceGender: Male (Kid)
+  VoiceWebname: John
+  Country: US
+  Language: en-US
+ai2-Kathy:
+  Engine: neural
+  VoiceId: ai2-Kathy
+  VoiceGender: Female
+  VoiceWebname: Kathy
+  Country: US
+  Language: en-US
+ai3-Jony:
+  Engine: neural
+  VoiceId: ai3-Jony
+  VoiceGender: Male
+  VoiceWebname: Jony
+  Country: US
+  Language: en-US

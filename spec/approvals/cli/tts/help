@@ -1,0 +1,53 @@
+Generate audio files from text
+
+Usage:
+  voicemaker tts [options]
+  voicemaker tts (-h|--help)
+
+Options:
+  -v --voice NAME
+    Voice ID or Webname
+
+  -t --text TEXT
+    Text to say
+
+  -f --file PATH
+    Load text from file
+
+  -c --config PATH
+    Use a YAML configuration file
+
+  -s --save PATH
+    Save audio file.
+    If not provided, a URL to the audio file will be printed instead.
+    When used with the --config option, omit the file extension, as it will be
+    determined based on the config file.
+
+  -d --debug
+    Show API parameters
+
+  -h --help
+    Show this help
+
+Environment Variables:
+  VOICEMAKER_API_KEY
+    Your Voicemaker API key [required]
+
+  VOICEMAKER_API_HOST
+    Override the API host URL
+
+  VOICEMAKER_CACHE_DIR
+    API cache diredctory [default: cache]
+
+  VOICEMAKER_CACHE_LIFE
+    API cache life. These formats are supported:
+    off - No cache
+    20s - 20 seconds
+    10m - 10 minutes
+    10h - 10 hours
+    10d - 10 days
+
+Examples:
+  voicemaker tts --voice ai3-Jony --text "Hello world" --save out.mp3
+  voicemaker tts -v ai3-Jony --file hello.txt --save out.mp3
+  voicemaker tts --config english-female.yml -f text.txt -s outfile

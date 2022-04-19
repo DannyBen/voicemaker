@@ -14,11 +14,11 @@ module Voicemaker
     end
 
     def inspect
-      %Q[#<Voicemaker::TTSParams:0x00007faabb1b2ea8 api_params="#{api_params}"]
+      %Q[#<Voicemaker::TTSParams api_params="#{api_params}"]
     end
 
     def voice
-      @voice ||= input_params[:voice] || raise(InputError, "Missing parameter: voice")
+      @voice ||= find_voice || raise(InputError, "Missing or invalid parameter: voice")
     end
 
     def text
@@ -72,6 +72,11 @@ module Voicemaker
 
     def language
       voice_params['Language']
+    end
+
+    def find_voice
+      return nil unless input_params[:voice]
+      voices.find(input_params[:voice])&.dig 'VoiceId'
     end
 
     def voice_params

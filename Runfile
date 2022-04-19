@@ -29,12 +29,27 @@ end
 
 help   "Inject the --help output to the README"
 action :'readme-patch' do
+  commands = [
+    "",
+    "voices --help",
+    "tts --help",
+    "new --help",
+    "project --help",
+  ]
+
   tag = "<!-- USAGE -->"
-  help = `bundle exec voicemaker --help`
-  header = "```\n$ voicemaker --help\n"
-  footer = "```"
+  help = []
+  commands.each do |command|
+    help << "### `$ voicemaker #{command}`\n\n"
+    help << '```'
+    help << `bundle exec voicemaker #{command}`
+    help << '```'
+    help << ''
+  end
+  help = help.join "\n"
+
   readme = File.read 'README.md'
-  output = readme.gsub /#{tag}(.*)#{tag}/m, "#{tag}\n#{header}\n#{help}\n#{footer}\n#{tag}"
+  output = readme.gsub /#{tag}(.*)#{tag}/m, "#{tag}\n#{help}\n#{tag}"
   File.write 'README.md', output
 end
 

@@ -1,0 +1,12 @@
+url: http://localhost:3000/uploads/1234567-voicemaker.in-speech.mp3
+[32m---
+Engine:[0m neural[32m
+VoiceId:[0m ai3-Jony[32m
+LanguageCode:[0m en-US[32m
+OutputFormat:[0m mp3[32m
+SampleRate:[0m '48000'[32m
+Effect:[0m default[32m
+MasterSpeed:[0m '0'[32m
+MasterVolume:[0m '0'[32m
+MasterPitch:[0m '0'[32m
+Text:[0m hi

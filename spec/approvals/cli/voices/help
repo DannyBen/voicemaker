@@ -1,0 +1,46 @@
+Get a list of available voices
+
+Usage:
+  voicemaker voices [--save PATH --count --verbose] [SEARCH...]
+  voicemaker voices (-h|--help)
+
+Options:
+  -s --save PATH
+    Save output to output YAML file
+
+  -v --verbose
+    Show the full voices data structure
+
+  -c --count
+    Add number of voices to the result
+
+  -h --help
+    Show this help
+
+Parameters:
+  SEARCH
+    Provide one or more text strings to search for (case insensitive AND search)
+
+Environment Variables:
+  VOICEMAKER_API_KEY
+    Your Voicemaker API key [required]
+
+  VOICEMAKER_API_HOST
+    Override the API host URL
+
+  VOICEMAKER_CACHE_DIR
+    API cache diredctory [default: cache]
+
+  VOICEMAKER_CACHE_LIFE
+    API cache life. These formats are supported:
+    off - No cache
+    20s - 20 seconds
+    10m - 10 minutes
+    10h - 10 hours
+    10d - 10 days
+
+Examples:
+  voicemaker voices en-us
+  voicemaker voices --save out.yml en-us
+  voicemaker voices en-us female
+  voicemaker voices en-us --verbose

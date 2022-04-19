@@ -3,12 +3,13 @@ require 'http'
 
 module Voicemaker
   class API
+    ROOT = 'https://developer.voicemaker.in/voice'
 
     class << self
       attr_writer :root, :key, :cache_life, :cache_dir
 
       def root
-        @root ||= ENV['VOICEMAKER_API_ROOT'] || 'https://developer.voicemaker.in/voice'
+        @root ||= ENV['VOICEMAKER_API_ROOT'] || ROOT
       end
 
       def key
@@ -33,16 +34,7 @@ module Voicemaker
         end
       end
 
-      # Performs HTTP GET
-      # Returns a parsed body on success
-      # Raises BadResponse on error
-      def get!(endpoint, params = {})
-        response = HTTP.auth(auth_header).get "#{root}/#{endpoint}", json: params
-        raise BadResponse, "#{response.status}\n#{response.body}" unless response.status.success?
-        response
-      end
-      
-      # Performs HTTP GET and cache it
+      # Performs HTTP POST and cache it
       # Returns a parsed body on success
       # Raises BadResponse on error
       def post(endpoint, params = {})
@@ -50,6 +42,25 @@ module Voicemaker
           response = post! endpoint, params
           response.parse
         end
+      end
+
+      def cache
+        @cache ||= begin
+          lightly = Lightly.new life: cache_life, dir: cache_dir
+          lightly.disable if cache_life == 'off'
+          lightly
+        end
+      end
+
+  protected
+
+      # Performs HTTP GET
+      # Returns a parsed body on success
+      # Raises BadResponse on error
+      def get!(endpoint, params = {})
+        response = HTTP.auth(auth_header).get "#{root}/#{endpoint}", json: params
+        raise BadResponse, "#{response.status}\n#{response.body}" unless response.status.success?
+        response
       end
 
       # Performs HTTP POST
@@ -60,12 +71,6 @@ module Voicemaker
         raise BadResponse, "#{response.status}\n#{response.body}" unless response.status.success?
         response
       end
-
-      def cache
-        @cache ||= Lightly.new life: cache_life, dir: cache_dir
-      end
-
-  protected
 
       def auth_header
         "Bearer #{key}"
