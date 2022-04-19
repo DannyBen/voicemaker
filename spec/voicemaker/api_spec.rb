@@ -1,48 +1,42 @@
 require 'spec_helper'
 
 describe API do
-  subject { API.new api_key }
+  subject { described_class }
   before { require_mock_server! }
 
-  let(:api_key) { FAKE_API_KEY }
-  let(:params) { YAML.load_file params_file }
-  let(:params_file) { 'spec/fixtures/config.yml' }
-
-  describe '#new' do
-    it "initializes with api key" do
-      expect(subject.api_key).to eq api_key
+  describe '::root' do
+    it "returns the root URI" do
+      expect(subject.root).to eq TEST_API_ROOT
     end
   end
 
-  describe '#voices' do
-    it "returns a hash of voices" do
-      expect(subject.voices.to_yaml).to match_approval('api/voices')
-    end
-
-    context "with a search string argument" do
-      it "returns only the voices that include the word" do
-        expect(subject.voices('kid').to_yaml).to match_approval('api/voices-search')
-      end
-    end
-
-    context "with a search array argument" do
-      it "returns only the voices that include all of the words" do
-        expect(subject.voices(['kid', 'en-us']).to_yaml).to match_approval('api/voices-search-array')
-      end
+  describe '::key' do
+    it "returns the API key" do
+      expect(subject.key).to eq FAKE_API_KEY
     end
   end
 
-  describe '#generate' do
-    it "generates an mp3 file and returns its url" do
-      expect(subject.generate params).to match_approval('api/generate')
+  describe '::cache_life' do
+    it "returns the default 4 hours" do
+      expect(subject.cache_life).to eq '4h'
     end
+  end
+  
+  describe '::cache_dir' do
+    it "returns the default cache dir" do
+      expect(subject.cache_dir).to eq 'spec/tmp/cache'
+    end
+  end
 
-    context "on error" do
-      let(:params_file) { 'spec/fixtures/config-error.yml' }
+  describe '::get' do
+    it "returns a parsed response from the API" do
+      expect(subject.get('/list').to_yaml).to match_approval('api/list')
+    end
+  end
 
-      it "raises BadResponse" do
-        expect { subject.generate params }.to raise_approval('api/generate-bad-response')
-      end
+  describe '::post' do
+    it "returns a parsed response from the API" do
+      expect(subject.post('/api').to_yaml).to match_approval('api/api')
     end
   end
 end

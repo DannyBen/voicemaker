@@ -5,7 +5,7 @@ describe 'bin/voicemaker' do
 
   context "on error" do
     it "displays it nicely" do
-      expect(`bin/voicemaker generate missing.yml out.mp3 2>&1`).to match_approval('cli/error')
+      expect(`bin/voicemaker tts --voice unknown 2>&1`).to match_approval('cli/error')
     end
   end
 end

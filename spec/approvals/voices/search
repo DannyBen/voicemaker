@@ -1,0 +1,8 @@
+---
+ai1-Amy:
+  Engine: neural
+  VoiceId: ai1-Amy
+  VoiceGender: Female (Kid)
+  VoiceWebname: Amy
+  Country: GB
+  Language: en-GB

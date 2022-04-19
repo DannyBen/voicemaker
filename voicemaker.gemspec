@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'lp', '~> 0.2'
   s.add_runtime_dependency 'http', '~> 5.0'
   s.add_runtime_dependency 'down', '~> 5.3'
+  s.add_runtime_dependency 'lightly', '~> 0.3'
 
   s.metadata = {
     "bug_tracker_uri"   => "https://github.com/DannyBen/voicemaker/issues",

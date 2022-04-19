@@ -1,0 +1,4 @@
+Usage:
+  voicemaker new config PATH
+  voicemaker new project DIR
+  voicemaker new (-h|--help)

@@ -36,8 +36,7 @@ First, require and initialize with your Voicemaker API key:
 
 ```ruby
 require 'voicemaker'
-api_key = '...'
-api = Voicemaker::API.new api_key
+Voicemaker::API.key = api_key
 ```
 
 ### Voices list
@@ -45,13 +44,14 @@ api = Voicemaker::API.new api_key
 Get the full voices list:
 
 ```ruby
-result = api.voices
+voices = Voicemaker::Voices.new
+result = voices.all
 ```
 
 Search the voices list for one or more strings (AND search):
 
 ```ruby
-result = api.voices ["en_US", "female"]
+voices.search "en_US", "female"
 ```
 
 ### Audio generation and download
@@ -59,90 +59,78 @@ result = api.voices ["en_US", "female"]
 Make an API call and get the URL to the audio file in return:
 
 ```ruby
-params = {
-  "Engine" => "neural",
-  "VoiceId" => "ai3-Jony",
-  "LanguageCode" => "en-US",
-  "OutputFormat" => "mp3",
-  "SampleRate" => "48000",
-  "Effect" => "default",
-  "MasterSpeed" => "0",
-  "MasterVolume" => "0",
-  "MasterPitch" => "0",
-  "Text" => "Hello world",
-}
-
-result = api.generate params
+tts = Voicemaker::TTS.new voice: 'Jony', text: 'Hello world'
+url = tts.url
+tts.save "output.mp3"
 ```
 
-For convenience, you can call `#download` instead, to mak ethe API call and
-download the file:
+or with the full list of available parameters:
 
 ```ruby
-result = api.download "out.mp3', params
+params = {
+  voice: "Jony",
+  output_format: "mp3",
+  sample_rate: 48000,
+  effect: "default",
+  master_speed: 0,
+  master_volume: 0,
+  master_pitch: 0,
+  text: "Hello world"
+}
+
+tts = Voicemaker::TTS.new params
+url = tts.url
 ```
+
+As the `voice` parameter, you may use either the voice ID (`ai3-Jony`) or the 
+voice web name (`Jony`). Just note that some voices have the same webname (for
+example, Emily), so in these cases it is best to use the full voice ID.
 
 ## Command line interface
 
 <!-- USAGE -->
+### `$ voicemaker `
+
+
 ```
-$ voicemaker --help
-
-Voicemaker API
-
-  API Documentation:
-  https://developer.voicemaker.in/apidocs
-
-Usage:
-  voicemaker voices [--save PATH] [SEARCH...]
-  voicemaker new CONFIG
-  voicemaker generate CONFIG [OUTPUT]
-  voicemaker batch INDIR OUTDIR
-  voicemaker (-h|--help|--version)
+Voicemaker Text-to-Speech
 
 Commands:
-  voices
-    Get list of voices, optionally in a given language
+  voices   Get a list of available voices
+  tts      Generate audio files from text
+  new      Create a new config file or a project directory
+  project  Create multiple audio files
 
-  new
-    Generate a sample config file
+API Documentation: https://developer.voicemaker.in/apidocs
 
-  generate
-    Generate audio file. The output filename will be the same as the config
-    filename, with the proper mp3 or wav extension
+```
 
-  batch
-    Generate multiple audio files from multiple config files
+### `$ voicemaker voices --help`
+
+
+```
+Get a list of available voices
+
+Usage:
+  voicemaker voices [--save PATH --count --compact] [SEARCH...]
+  voicemaker voices (-h|--help)
 
 Options:
-  -l --language LANG
-    Limit results to a specific language
-
   -s --save PATH
     Save output to output YAML file
+
+  -t --compact
+    Show each voice in a single line
+
+  -c --count
+    Add number of voices to the result
 
   -h --help
     Show this help
 
-  --version
-    Show version number
-
 Parameters:
   SEARCH
-    Provide one or more text strings to search for (case insensitive)
-
-  CONFIG
-    Path to config file
-
-  OUTPUT
-    Path to output mp3/wav file. If not provided, the filename will be the same
-    as the config file, with wav/mp3 extension
-
-  INDIR
-    Path to input directory, containing config YAML files
-
-  OURDIR
-    Path to output directory, where mp3/wav files will be saved
+    Provide one or more text strings to search for (case insensitive AND search)
 
 Environment Variables:
   VOICEMAKER_API_KEY
@@ -151,15 +139,165 @@ Environment Variables:
   VOICEMAKER_API_HOST
     Override the API host URL
 
+  VOICEMAKER_CACHE_DIR
+    API cache diredctory [default: cache]
+
+  VOICEMAKER_CACHE_LIFE
+    API cache life. These formats are supported:
+    off - No cache
+    20s - 20 seconds
+    10m - 10 minutes
+    10h - 10 hours
+    10d - 10 days
+
 Examples:
   voicemaker voices en-us
   voicemaker voices --save out.yml en-us
   voicemaker voices en-us female
-  voicemaker new test.yml
-  voicemaker generate test.yml out.mp3
-  voicemaker batch configs out
+  voicemaker voices en-us --compact
 
 ```
+
+### `$ voicemaker tts --help`
+
+
+```
+Generate audio files from text
+
+Usage:
+  voicemaker tts [options]
+  voicemaker tts (-h|--help)
+
+Options:
+  -v --voice NAME
+    Voice ID or Webname
+
+  -t --text TEXT
+    Text to say
+
+  -f --file PATH
+    Load text from file
+
+  -c --config PATH
+    Use a YAML configuration file
+
+  -s --save PATH
+    Save audio file.
+    If not provided, a URL to the audio file will be printed instead.
+    When used with the --config option, omit the file extension, as it will be
+    determined based on the config file.
+
+  -d --debug
+    Show API parameters
+
+  -h --help
+    Show this help
+
+Environment Variables:
+  VOICEMAKER_API_KEY
+    Your Voicemaker API key [required]
+
+  VOICEMAKER_API_HOST
+    Override the API host URL
+
+  VOICEMAKER_CACHE_DIR
+    API cache diredctory [default: cache]
+
+  VOICEMAKER_CACHE_LIFE
+    API cache life. These formats are supported:
+    off - No cache
+    20s - 20 seconds
+    10m - 10 minutes
+    10h - 10 hours
+    10d - 10 days
+
+Examples:
+  voicemaker tts --voice ai3-Jony --text "Hello world" --save out.mp3
+  voicemaker tts -v ai3-Jony --file hello.txt --save out.mp3
+  voicemaker tts --config english-female.yml -f text.txt -s outfile
+
+```
+
+### `$ voicemaker new --help`
+
+
+```
+Create a new config file or a project directory
+
+Usage:
+  voicemaker new config PATH
+  voicemaker new project DIR
+  voicemaker new (-h|--help)
+
+Commands:
+  config
+    Create a config file to be used with the 'voicemaker tts' command
+
+  project
+    Generate a project directory to be used with the 'voicemaker project'
+    command
+
+Options:
+  -h --help
+    Show this help
+
+Parameters:
+  PATH
+    Path to use for creating the config file
+
+  DIR
+    Directory name for creating the project structure
+
+Examples:
+  voicemaker new config test.yml
+  voicemaker new project sample-project
+
+```
+
+### `$ voicemaker project --help`
+
+
+```
+Create multiple audio files
+
+Usage:
+  voicemaker project PATH [--debug]
+  voicemaker project (-h|--help)
+
+Options:
+  --debug
+    Show API parameters
+
+  -h --help
+    Show this help
+
+Parameters:
+  PATH
+    Path to the project directory
+
+Environment Variables:
+  VOICEMAKER_API_KEY
+    Your Voicemaker API key [required]
+
+  VOICEMAKER_API_HOST
+    Override the API host URL
+
+  VOICEMAKER_CACHE_DIR
+    API cache diredctory [default: cache]
+
+  VOICEMAKER_CACHE_LIFE
+    API cache life. These formats are supported:
+    off - No cache
+    20s - 20 seconds
+    10m - 10 minutes
+    10h - 10 hours
+    10d - 10 days
+
+Examples:
+  voicemaker project sample-project
+
+```
+
 <!-- USAGE -->
 
 
