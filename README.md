@@ -51,7 +51,7 @@ result = voices.all
 Search the voices list for one or more strings (AND search):
 
 ```ruby
-voices.search "en-us", "female"
+result = voices.search "en-us", "female"
 ```
 
 ### Audio generation and download
