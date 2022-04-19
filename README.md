@@ -36,7 +36,7 @@ First, require and initialize with your Voicemaker API key:
 
 ```ruby
 require 'voicemaker'
-Voicemaker::API.key = api_key
+Voicemaker::API.key = 'your api key'
 ```
 
 ### Voices list
@@ -51,7 +51,7 @@ result = voices.all
 Search the voices list for one or more strings (AND search):
 
 ```ruby
-voices.search "en_US", "female"
+voices.search "en-us", "female"
 ```
 
 ### Audio generation and download
