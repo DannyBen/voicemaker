@@ -58,18 +58,28 @@ module Voicemaker
       # Returns a parsed body on success
       # Raises BadResponse on error
       def get!(endpoint, params = {})
-        response = HTTP.auth(auth_header).get "#{root}/#{endpoint}", json: params
-        raise BadResponse, "#{response.status}\n#{response.body}" unless response.status.success?
-        response
+        request do
+          client.get "#{root}/#{endpoint}", json: params
+        end
       end
 
       # Performs HTTP POST
       # Returns a parsed body on success
       # Raises BadResponse on error
       def post!(endpoint, params = {})
-        response = HTTP.auth(auth_header).post "#{root}/#{endpoint}", json: params
+        request do 
+          client.post "#{root}/#{endpoint}", json: params
+        end
+      end
+
+      def request
+        response = yield
         raise BadResponse, "#{response.status}\n#{response.body}" unless response.status.success?
         response
+      end
+
+      def client
+        HTTP.auth auth_header
       end
 
       def auth_header
