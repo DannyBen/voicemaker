@@ -32,15 +32,18 @@ module Voicemaker
       end
 
       def send_output(data)
-        save = args['--save']
-        if save
-          say "saved #{save}"
-          File.write save, args['--verbose'] ? data.to_yaml : compact(data)
+        if args['--save']
+          save data
         elsif args['--verbose']
           lp data
         else
           puts compact(data)
         end
+      end
+
+      def save(data)
+        File.write args['--save'], args['--verbose'] ? data.to_yaml : compact(data)
+        say "saved #{args['--save']}"
       end
 
       def compact(data)
