@@ -31,13 +31,13 @@ describe API do
 
   describe '::get' do
     it 'returns a parsed response from the API' do
-      expect(subject.get('/list').to_yaml).to match_approval('api/list')
+      expect(subject.get('list').to_yaml).to match_approval('api/list')
     end
   end
 
   describe '::post' do
     it 'returns a parsed response from the API' do
-      expect(subject.post('/api').to_yaml).to match_approval('api/api')
+      expect(subject.post('api').to_yaml).to match_approval('api/api')
     end
   end
 end

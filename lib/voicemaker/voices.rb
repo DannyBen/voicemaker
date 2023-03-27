@@ -12,7 +12,7 @@ module Voicemaker
     # Returns all voices
     def all
       @all ||= begin
-        response = API.get '/list'
+        response = API.get 'list'
         result = response.dig 'data', 'voices_list'
         raise BadResponse, "Unexpected response: #{response}" unless result
 
