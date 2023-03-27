@@ -1,18 +1,18 @@
 module Voicemaker
   module Commands
     class ProjectCommand < Base
-      help "Create multiple audio files"
+      help 'Create multiple audio files'
 
-      usage "voicemaker project PATH [--debug]"
-      usage "voicemaker project (-h|--help)"
+      usage 'voicemaker project PATH [--debug]'
+      usage 'voicemaker project (-h|--help)'
 
-      param "PATH", "Path to the project directory"
+      param 'PATH', 'Path to the project directory'
 
-      option "--debug", "Show API parameters"
+      option '--debug', 'Show API parameters'
 
       api_environment
 
-      example "voicemaker project sample-project"
+      example 'voicemaker project sample-project'
 
       def run
         text_files.each do |file|
@@ -27,17 +27,17 @@ module Voicemaker
           show_details tts if args['--debug']
 
           tts.save output_path
-          say "---"
+          say '---'
         end
       end
 
     private
 
       def tts
-        @tts ||= Voicemaker::TTS.new **config
+        @tts ||= Voicemaker::TTS.new(**config)
       end
 
-      def show_details(tts, output: nil)
+      def show_details(tts)
         lp tts.params.api_params
       end
 
@@ -48,7 +48,8 @@ module Voicemaker
       def config
         @config ||= begin
           raise InputError, "Cannot find config file: #{config_path}" unless File.exist? config_path
-          YAML.load_file(config_path).transform_keys &:to_sym
+
+          YAML.load_file(config_path).transform_keys(&:to_sym)
         end
       end
 

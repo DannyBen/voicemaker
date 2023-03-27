@@ -13,7 +13,8 @@ module Voicemaker
       end
 
       def key
-        @key ||= ENV['VOICEMAKER_API_KEY'] || raise(MissingAuth, "Please set the 'VOICEMAKER_API_KEY' environment variable")
+        @key ||= ENV['VOICEMAKER_API_KEY'] ||
+          raise(MissingAuth, "Please set the 'VOICEMAKER_API_KEY' environment variable")
       end
 
       def cache_life
@@ -52,7 +53,7 @@ module Voicemaker
         end
       end
 
-  protected
+    protected
 
       # Performs HTTP GET
       # Returns a parsed body on success
@@ -67,7 +68,7 @@ module Voicemaker
       # Returns a parsed body on success
       # Raises BadResponse on error
       def post!(endpoint, params = {})
-        request do 
+        request do
           client.post "#{root}/#{endpoint}", json: params
         end
       end
@@ -75,6 +76,7 @@ module Voicemaker
       def request
         response = yield
         raise BadResponse, "#{response.status}\n#{response.body}" unless response.status.success?
+
         response
       end
 
@@ -85,7 +87,6 @@ module Voicemaker
       def auth_header
         "Bearer #{key}"
       end
-
     end
   end
 end

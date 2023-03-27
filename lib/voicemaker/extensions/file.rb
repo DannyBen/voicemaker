@@ -1,4 +1,4 @@
-require "fileutils"
+require 'fileutils'
 
 class File
   class << self

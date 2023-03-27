@@ -10,9 +10,10 @@ module Voicemaker
 
     # Returns the URL for the generated file
     def url
-      response = API.post "api", params.api_params
+      response = API.post 'api', params.api_params
       url = response['path']
       raise BadResponse, "Received empty URL: #{response}" unless url
+
       url
     end
 

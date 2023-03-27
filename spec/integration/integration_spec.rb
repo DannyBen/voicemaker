@@ -17,11 +17,11 @@ describe 'Integration', :require_test_api_key do
   config = YAML.load_file 'spec/integration/commands.yml'
   config.each do |name, command|
     context name do
-      it "works" do
-        args = command.is_a?(Array) ? command : command.split(' ')
+      it 'executes successfully' do
+        args = command.is_a?(Array) ? command : command.split
         expect { subject.run args }
           .to output_approval("integration/#{name}")
-          .except(/\/(\d)+\-/, '#')        
+          .except(%r{/(\d)+-}, '#')
       end
     end
   end

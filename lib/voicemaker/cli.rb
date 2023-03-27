@@ -10,16 +10,15 @@ module Voicemaker
   class CLI
     def self.runner
       router = MisterBin::Runner.new version: VERSION,
-        header: "Voicemaker Text-to-Speech",
-        footer: "API Documentation: https://developer.voicemaker.in/apidocs"
+        header: 'Voicemaker Text-to-Speech',
+        footer: 'API Documentation: https://developer.voicemaker.in/apidocs'
 
-      router.route "voices", to: Commands::VoicesCommand
-      router.route "tts", to: Commands::TTSCommand
-      router.route "new", to: Commands::NewCommand
-      router.route "project", to: Commands::ProjectCommand
+      router.route 'voices', to: Commands::VoicesCommand
+      router.route 'tts', to: Commands::TTSCommand
+      router.route 'new', to: Commands::NewCommand
+      router.route 'project', to: Commands::ProjectCommand
 
       router
-
     end
   end
 end

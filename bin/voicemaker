@@ -8,18 +8,15 @@ runner = Voicemaker::CLI.runner
 
 begin
   exit runner.run ARGV
-
 rescue Interrupt
   say "\nGoodbye"
-  exit 1  
-
+  exit 1
 rescue => e
   if ENV['DEBUG']
-    puts e.backtrace.reverse 
-    say ""
+    puts e.backtrace.reverse
+    say ''
   end
   say "ru`ERROR: #{e.class}`"
   say e.message
   exit 1
-
 end

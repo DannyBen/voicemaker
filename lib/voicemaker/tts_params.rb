@@ -14,15 +14,15 @@ module Voicemaker
     end
 
     def inspect
-      %Q[#<Voicemaker::TTSParams api_params="#{api_params}"]
+      %[#<Voicemaker::TTSParams api_params="#{api_params}"]
     end
 
     def voice
-      @voice ||= find_voice || raise(InputError, "Missing or invalid parameter: voice")
+      @voice ||= find_voice || raise(InputError, 'Missing or invalid parameter: voice')
     end
 
     def text
-      @text ||= input_params[:text] || raise(InputError, "Missing parameter: text")
+      @text ||= input_params[:text] || raise(InputError, 'Missing parameter: text')
     end
 
     def output_format
@@ -34,7 +34,7 @@ module Voicemaker
     end
 
     def sample_rate
-      @sample_rate ||= (input_params[:sample_rate] || 48000).to_s
+      @sample_rate ||= (input_params[:sample_rate] || 48_000).to_s
     end
 
     def master_speed
@@ -51,16 +51,16 @@ module Voicemaker
 
     def api_params
       {
-        "Engine" => engine,
-        "VoiceId" => voice,
-        "LanguageCode" => language,
-        "OutputFormat" => output_format,
-        "SampleRate" => sample_rate,
-        "Effect" => effect,
-        "MasterSpeed" => master_speed,
-        "MasterVolume" => master_volume,
-        "MasterPitch" => master_pitch,
-        "Text" => text
+        'Engine'       => engine,
+        'VoiceId'      => voice,
+        'LanguageCode' => language,
+        'OutputFormat' => output_format,
+        'SampleRate'   => sample_rate,
+        'Effect'       => effect,
+        'MasterSpeed'  => master_speed,
+        'MasterVolume' => master_volume,
+        'MasterPitch'  => master_pitch,
+        'Text'         => text,
       }
     end
 
@@ -76,6 +76,7 @@ module Voicemaker
 
     def find_voice
       return nil unless input_params[:voice]
+
       voices.find(input_params[:voice])&.dig 'VoiceId'
     end
 
