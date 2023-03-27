@@ -42,7 +42,7 @@ module Voicemaker
       end
 
       def text_files
-        @text_files ||= Dir["#{indir}/*.txt"]
+        @text_files ||= Dir["#{indir}/*.txt"].sort
       end
 
       def config
