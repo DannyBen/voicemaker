@@ -26,11 +26,11 @@ module Voicemaker
       def run
         verify_args
         tts = Voicemaker::TTS.new **tts_params
-        say "url: !txtblu!#{tts.url}"
+        say "url: b`#{tts.url}`"
 
         if output_file
           tts.save output_file
-          say "out: !txtblu!#{output_file}"
+          say "out: b`#{output_file}`"
         end
         
         show_details tts if args['--debug']

@@ -21,9 +21,9 @@ module Voicemaker
           audio_file = File.basename(file, '.txt') + ".#{tts.params.output_format}"
           output_path = "#{outdir}/#{audio_file}"
 
-          say "in:  !txtblu!#{file}"
-          say "url: !txtblu!#{tts.url}"
-          say "out: !txtblu!#{output_path}"
+          say "in:  b`#{file}`"
+          say "url: b`#{tts.url}`"
+          say "out: b`#{output_path}`"
           show_details tts if args['--debug']
 
           tts.save output_path

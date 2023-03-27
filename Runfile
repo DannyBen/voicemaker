@@ -1,25 +1,11 @@
-require "runfile-tasks"
 require "pretty_trace/enable-trim"
-require "lp"
-require_relative 'lib/voicemaker'
 
 title   "Voicemaker Developer Toolbelt"
 summary "Runfile tasks for building the Voicemaker gem"
-version Voicemaker::VERSION
 
-RunfileTasks::RubyGems.all 'voicemaker'
-RunfileTasks::Testing.rspec
-RunfileTasks::Docs.rdoc
-
-help   "Run YARD server"
-action :yard do
-  system "yard server -p3000 -B0.0.0.0 -r"
-end
-
-help   "Run interactive console"
-action :console, :c do
-  system "bundle exec bin/console"
-end
+import_gem 'runfile-tasks/gem'
+import_gem 'runfile-tasks/yard'
+import 'debug'
 
 help   "Run test mock server"
 usage  "mockserver"
@@ -53,4 +39,3 @@ action :'readme-patch' do
   File.write 'README.md', output
 end
 
-require './debug.rb' if File.exist? 'debug.rb'

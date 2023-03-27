@@ -5,6 +5,7 @@ require 'json'
 
 set :port, 3000
 set :bind, '0.0.0.0'
+set :server, :puma
 
 def json(hash)
   content_type :json
