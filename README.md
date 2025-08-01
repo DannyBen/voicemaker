@@ -1,18 +1,9 @@
 # Voicemaker API Library and Command Line
 
-[![Gem Version](https://badge.fury.io/rb/voicemaker.svg)](https://badge.fury.io/rb/voicemaker)
-[![Build Status](https://github.com/DannyBen/voicemaker/workflows/Test/badge.svg)](https://github.com/DannyBen/voicemaker/actions?query=workflow%3ATest)
-[![Maintainability](https://api.codeclimate.com/v1/badges/b1977ee0d60affeba3d4/maintainability)](https://codeclimate.com/github/DannyBen/voicemaker/maintainability)
-
----
-
 This gem provides both a Ruby library and a command line interface for the 
 [Voicemaker][voicemaker] Text to Speech service.
 
 This gem is not affiliated with Voicemaker.
-
----
-
 
 ## Install
 
